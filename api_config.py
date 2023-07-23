@@ -4,15 +4,15 @@ from elevenlabs import set_api_key
 
 
 def initChatGptAPI():
-    openai.api_key = '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'
+    openai.api_key = 'API KEY'
     return openai
 
 
 
 def initElevenLabs():
-    set_api_key('c156313da25c8807863fb1587dcd2421')
+    set_api_key('API KEY')
 
 
 
 def setBraveAPI():
-    return 'BSAVoB-xtxycJAzL1Bg0gfGxfQPiWOr'
+    return 'API KEY'
