@@ -1,18 +1,17 @@
 import openai
-from elevenlabs import set_api_key
+from elevenlabs.client import ElevenLabs
 
 
 
 def initChatGptAPI():
-    openai.api_key = 'API KEY'
+    openai.api_key = 'API_KEY'
     return openai
 
 
 
 def initElevenLabs():
-    set_api_key('API KEY')
-
-
+    client = ElevenLabs(api_key="API_KEY")
+    return client
 
 def setBraveAPI():
-    return 'API KEY'
+    return 'API_KEY'
