@@ -21,14 +21,14 @@ def search(topic):
 
 
 def getSearchTerms(topic):
-    searchTerms = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    searchTerms = openai.chat.completions.create(
+    model="gpt-4o",
     messages=[
             {"role": "system", "content": "You are a robot specialized in searching on Bing for relevant articles on any topic provided to you, from a user defined topic you are able to list related search terms capable of leading to high credibility and converting articles on the given subject. You always return only an unnumbered list of terms separated by '* ' without personal comments."},
             {"role": "user", "content": topic},
         ]
     )
-    response = searchTerms.choices[0].message["content"]
+    response = searchTerms.choices[0].message.content
 
     searchTerms = parseSearchTerms(response)
     searchTerms.append(topic)
