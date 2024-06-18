@@ -18,7 +18,8 @@ def accurate(topic, searchResults):
 def findArticles(articles, searchArticles):
     findedArticles = []
     for search in searchArticles:
-        findedArticles.append(list(filter(lambda articles: articles['link'] == search, articles))[0])
+        if len(list(filter(lambda articles: articles['link'] == search, articles))) > 0:
+            findedArticles.append(list(filter(lambda articles: articles['link'] == search, articles))[0])
 
     return findedArticles
 
@@ -101,7 +102,10 @@ def curator(topic, articles):
         bestArticles = articles
         
     print(simple_colors.yellow(f"total articles: {len(bestArticles)}"))
-    print(simple_colors.yellow(f"\nbest articles: {bestArticles}"))
+    print(simple_colors.yellow(f"\nbest articles: "), end='')
+
+    for article in bestArticles:
+        print(simple_colors.yellow(f"{article['link']}"), end=', ')
 
     return bestArticles
 
@@ -110,11 +114,11 @@ def curator(topic, articles):
 def accurateBot(prompt):
     prompt.append({"role": "user", "content": f'list the best links'})
 
-    acuratedArticles = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    acuratedArticles = openai.chat.completions.create(
+    model="gpt-4o",
     messages=prompt
     )
-    response = acuratedArticles.choices[0].message["content"]
+    response = acuratedArticles.completion.choices[0].message.content
 
     sleep(2)
 
