@@ -5,7 +5,8 @@ from robots.editor import editor
 from robots.translate import translate
 from robots.voice import voice
 from robots.podcast import merge_audios
-from api_config import initChatGptAPI, initElevenLabs
+from api_config import initChatGptAPI
+from utils import *
 from time import sleep
 import simple_colors  
 
@@ -21,10 +22,11 @@ def main():
 
    print(simple_colors.yellow("\n\naccurate:\n\n"))
    articles = accurate(topic, searchResults)
+   print(articles)
    
    comments = ''
 
-   for i in range(10):
+   for i in range(3):
       print(simple_colors.green("\n\nrecast:\n\n"))
       recasted = recast(topic, articles, comments)
       sleep(3)
@@ -35,32 +37,14 @@ def main():
 
    recasted = writeScript(topic, recast(topic, articles, comments), articles)
 
-   initElevenLabs()
-
-   voice(translate(recasted).split("\n\n"), topic)
+   voice(translate(recasted).split("\n\n"), topic, female="Gigi")
    
-   merge_audios('/audio')
+   merge_audios('audio', normaliseStr(topic))
 
    while True:
       close = int(input('Write 0 to close the program: '))
       if close == 0:
          break
-
-
-
-def writeScript(topic, recast, links):
-   fileName = f"scripts/script-{topic.replace(' ', '-')}.txt"
-   links = '\n'.join([i['link'] for i in links])
-   try:
-      file = open(fileName, 'r+')
-      file.writelines(f"{topic}:\n\n{recast}\n\n========================================================================================================\n\nArticles:\n\n{links}")
-   except FileNotFoundError:
-      file = open(fileName, 'w+')
-      file.writelines(f"{topic}:\n\n{recast}\n\n========================================================================================================\n\nArticles:\n\n{links}")
-
-   file.close()
-
-   return recast
 
 
 
