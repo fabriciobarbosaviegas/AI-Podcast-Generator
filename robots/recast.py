@@ -29,10 +29,10 @@ def recastBot(context, topic, comments):
     if comments != '':
         message[len(message)-1] = {"role":"user", "content":comments}
 
-    recastedContent = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    recastedContent = openai.chat.completions.create(
+    model="gpt-4o",
     messages= message
     )
-    response = recastedContent.choices[0].message["content"]
+    response = recastedContent.choices[0].message.content
     print(simple_colors.green(response))
     return response
