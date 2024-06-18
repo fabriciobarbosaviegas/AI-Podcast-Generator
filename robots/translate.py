@@ -3,14 +3,14 @@ import openai
 
 
 def translate(text):
-    searchTerms = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
+    searchTerms = openai.chat.completions.create(
+    model="gpt-4o",
     messages=[
             {"role": "system", "content": text},
-            {"role": "user", "content": "Traduza esse texto para o português brasileiro mantendo fidelidade total ao seu tema"},
+            {"role": "user", "content": "Traduza esse texto para o português brasileiro mantendo fidelidade total ao seu tema."},
         ]
     )
-    response = searchTerms.choices[0].message["content"]
+    response = searchTerms.choices[0].message.content
 
     return response
 
